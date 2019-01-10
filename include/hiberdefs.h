@@ -9,11 +9,10 @@
 #endif
 #define HIBERLITE_BASE_CLASS(ClName) hiberlite::sql_nvp< ClName >(#ClName,*((ClName*)this) )
 
-#define HIBERLITE_EXPORT_CLASS(ClName) 			\
-namespace hiberlite{							\
-template<>										\
-std::string Database::getClassName<ClName>()	\
-{	std::string temp(#ClName);std::replace(temp.begin(), temp.end(), ':', '_');return temp;}}
+#define HIBERLITE_EXPORT_CLASS(ClName)                          \
+template<>                                                      \
+inline std::string hiberlite::Database::getClassName<ClName>()  \
+{	std::string temp(#ClName);std::replace(temp.begin(), temp.end(), ':', '_');return temp;}
 
 //#define HIBERLITE_COLLECTION(Field) hiberlite::collection_nvp<typeof(Field),typeof(Field.begin())>(#Field, Field, Field.begin(), Field.end())
 //#define HIBERLITE_ARRAY(Field,N) hiberlite::collection_nvp<typeof(Field),typeof(Field[0])>(#Field,  *Field, *(Field+N))
