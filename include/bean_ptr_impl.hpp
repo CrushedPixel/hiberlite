@@ -129,7 +129,7 @@ void bean_ptr<C>::save() {
 }
 
 template<class C>
-sqlid_t bean_ptr<C>::get_id() {
+sqlid_t bean_ptr<C>::get_id() const {
 	if( !shared_res< real_bean<C> >::get_object() )
 		return Database::NULL_ID;
 	return shared_res< real_bean<C> >::get_object()->get_key().id;

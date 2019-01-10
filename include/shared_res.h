@@ -19,6 +19,11 @@ public:
 	inline C* getRes(){
 		return res;
 	}
+
+	inline const C* getRes() const {
+		return res;
+	}
+
 	inline virtual ~shared_cnt_obj_pair(){
 		if(refCount)
 			throw std::logic_error("resource is busy");
@@ -81,6 +86,12 @@ public:
 	}
 
 	inline C* get_object(){
+		if(!res)
+			return NULL;
+		return res->getRes();
+	}
+
+	inline const C* get_object() const {
 		if(!res)
 			return NULL;
 		return res->getRes();

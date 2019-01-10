@@ -27,7 +27,7 @@ class real_bean : noncopyable {
 		void destroy();
 		bool destroyed() const { return forgotten; }
 
-		bool operator==(real_bean &other) {
+		bool operator==(const real_bean &other) const {
 			return key == other.key;
 		}
 
@@ -72,14 +72,11 @@ class bean_ptr : public shared_res< real_bean<C> >
 			return shared_res< real_bean<C> >::get_object()->destroyed();
 		}
 
-		inline sqlid_t get_id();
+		inline sqlid_t get_id() const;
 		inline C& operator*();
 		inline C* operator->();
 
-		bool operator==(bean_ptr<C> &other) {
-			// since get_object might have to lazy-load
-			// the underlying data, we can't compare to a const object.
-
+		bool operator==(const bean_ptr<C> &other) const {
 			if (this->get_object() == other.get_object()) return true;
 
 			if (this->get_object() && other.get_object()) {
@@ -87,6 +84,10 @@ class bean_ptr : public shared_res< real_bean<C> >
 			}
 
 			return false;
+		}
+
+		bool operator!=(const bean_ptr<C> &other) const {
+			return !(*this == other);
 		}
 };
 

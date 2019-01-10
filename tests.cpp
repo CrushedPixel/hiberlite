@@ -221,14 +221,14 @@ struct Tester{
 	    db2.dropModel();
 	    db2.createModel();
 
-	    bean_ptr<A> bean1a = db1.createBean<A>();
-	    bean_ptr<A> bean1b = db1.loadBean<A>(bean1a.get_id());
+	    const bean_ptr<A> bean1a = db1.createBean<A>();
+	    const bean_ptr<A> bean1b = db1.loadBean<A>(bean1a.get_id());
 
 	    if (bean1a != bean1b) {
 	    	throw std::runtime_error("bean_ptr equality operator yielded a false negative");
 	    }
 
-	    bean_ptr<A> bean2 = db2.createBean<A>();
+	    const bean_ptr<A> bean2 = db2.createBean<A>();
 
 	    if (bean1a.get_id() != bean2.get_id()) {
 	    	throw std::runtime_error("oops - this should never happen");
