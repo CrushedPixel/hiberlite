@@ -219,3 +219,9 @@ pip-log.txt
 !premake4.exe
 *.a
 *.opendb
+
+##########################
+# JetBrains IDEs (CLion) #
+##########################
+.idea
+cmake-build-debug
