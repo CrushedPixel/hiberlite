@@ -207,6 +207,38 @@ struct Tester{
               throw std::runtime_error("BLOB load failed");
         }
     }
+
+    void test5() {
+		// test bean_ptr equality operator
+
+		Database db1("t5_1.db");
+		db1.registerBeanClass<A>();
+	    db1.dropModel();
+	    db1.createModel();
+
+	    Database db2("t5_2.db");
+	    db2.registerBeanClass<A>();
+	    db2.dropModel();
+	    db2.createModel();
+
+	    bean_ptr<A> bean1a = db1.createBean<A>();
+	    bean_ptr<A> bean1b = db1.loadBean<A>(bean1a.get_id());
+
+	    if (bean1a != bean1b) {
+	    	throw std::runtime_error("bean_ptr equality operator yielded a false negative");
+	    }
+
+	    bean_ptr<A> bean2 = db2.createBean<A>();
+
+	    if (bean1a.get_id() != bean2.get_id()) {
+	    	throw std::runtime_error("oops - this should never happen");
+	    }
+
+	    if (bean1a == bean2) {
+	    	// beans from different databases are not equal, even if they have the same id
+	    	throw std::runtime_error("bean_ptr equality operator yielded a false positive");
+	    }
+	}
 };
 
 int main()
@@ -218,6 +250,7 @@ int main()
 			t.test2();
 			t.test3();
             t.test4();
+			t.test5();
 		}
 		cout << "tests passed\n";
 	}catch(std::exception& e){

@@ -27,6 +27,10 @@ class real_bean : noncopyable {
 		void destroy();
 		bool destroyed() const { return forgotten; }
 
+		bool operator==(real_bean &other) {
+			return key == other.key;
+		}
+
 	protected:
 		inline void loadLazy();
 
@@ -56,7 +60,7 @@ class bean_ptr : public shared_res< real_bean<C> >
 
 		bean_ptr();
 
-		operator bool() const;
+		operator bool();
 
 		bean_ptr(const bean_ptr<C>& other);
 		bean_ptr<C>& operator=(const bean_ptr<C>& other);
@@ -71,6 +75,19 @@ class bean_ptr : public shared_res< real_bean<C> >
 		inline sqlid_t get_id();
 		inline C& operator*();
 		inline C* operator->();
+
+		bool operator==(bean_ptr<C> &other) {
+			// since get_object might have to lazy-load
+			// the underlying data, we can't compare to a const object.
+
+			if (this->get_object() == other.get_object()) return true;
+
+			if (this->get_object() && other.get_object()) {
+				return *this->get_object() == *other.get_object();
+			}
+
+			return false;
+		}
 };
 
 }//namespace hiberlite

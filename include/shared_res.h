@@ -136,6 +136,10 @@ public:
 	bool operator<(const bean_key& k) const{
 		return (id<k.id) || ((id==k.id) && (con<k.con));
 	}
+
+	bool operator==(const bean_key& k) const{
+		return id == k.id && con == k.con;
+	}
 };
 
 } //namespace hiberlite
