@@ -62,14 +62,20 @@ void Database::dropModel()
 	}
 }
 
-void Database::createModel()
+void Database::createModel(bool ifNotExists)
 {
 	if(!mx)
 		throw std::logic_error("register bean classes first");
 	Model mdl=mx->getModel();
 	for(Model::iterator it=mdl.begin();it!=mdl.end();it++){
 		Table& t=it->second;
-		std::string query="CREATE TABLE "+t.name+" (";
+
+		std::string query = "CREATE TABLE ";
+		if (ifNotExists) {
+			query += "IF NOT EXISTS ";
+		}
+
+		query += t.name+" (";
 		bool needComma=false;
 		for(std::map<std::string,Column>::iterator c=t.columns.begin();c!=t.columns.end();c++){
 			if(needComma)

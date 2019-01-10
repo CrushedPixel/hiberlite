@@ -65,7 +65,7 @@ class Database : noncopyable
 
 		std::vector<std::string> checkModel();
 		void dropModel();
-		void createModel();
+		void createModel(bool ifNotExists = false);
 
 		template<class C>
 		bean_ptr<C> loadBean(sqlid_t objId);
