@@ -5,7 +5,7 @@ INSTALL_LIB = $(INSTALL_PREFIX)/lib
 
 all : libhiberlite.a sqlite3.o tests sample
 
-OBJS=BeanLoader.o BeanUpdater.o ChildKiller.o CppModel.o Database.o ModelExtractor.o Registry.o SQLiteStmt.o Visitor.o shared_res.o sqlite3.o
+OBJS=BeanLoader.o BeanUpdater.o ChildKiller.o CppModel.o Database.o ModelExtractor.o SQLiteStmt.o shared_res.o sqlite3.o
 
 CXXFLAGS=-std=c++0x -Iinclude/ -Wall -Isqlite-amalgamation
 LDFLAGS=-lpthread -ldl
